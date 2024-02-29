@@ -43,6 +43,11 @@ exports.loginService = async (email, password) => {
 };
 exports.getUserService = async (userId) => {
   const user = await User.findById(userId);
+  if (!user) {
+    const error = new Error("User not found.");
+    error.statusCode = 404;
+    throw error;
+  }
   return {
     message: "User fetched.",
     user: user,
@@ -51,6 +56,11 @@ exports.getUserService = async (userId) => {
 
 exports.updateUserService = async (userId, data) => {
   const user = await User.findById(userId);
+  if (!user) {
+    const error = new Error("User not found.");
+    error.statusCode = 404;
+    throw error;
+  }
   user.name = data.name;
   user.email = data.email;
   user.password = data.password;

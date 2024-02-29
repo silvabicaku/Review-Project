@@ -18,7 +18,7 @@ module.exports = async (req, res, next) => {
       throw error;
     }
     const user = await User.findById(decodedToken.userId);
-    console.log("userAdmin:", user.isAdmin);
+    // console.log("userAdmin:", user.isAdmin);
     if (!user) {
       const error = new Error("User not found.");
       error.statusCode = 404;

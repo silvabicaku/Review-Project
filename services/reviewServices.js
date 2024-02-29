@@ -1,19 +1,21 @@
 const Review = require("../models/review");
 const User = require("../models/user");
-const { ObjectId } = require("mongoose").Types;
+
 exports.createServiceReview = async (reviewText, rating, userId, session) => {
-  const review = new Review({
-    description: reviewText,
-    rate: rating,
-    userId: userId,
-  });
-  await review.save({ session });
+  //const userId = new mongoose.Types.ObjectId();
   const user = await User.findById(userId).session(session);
   if (!user) {
     const error = new Error("Could not find user.");
     error.statusCode = 404;
     throw error;
   }
+  const review = new Review({
+    description: reviewText,
+    rate: rating,
+    userId: userId,
+  });
+  await review.save({ session });
+
   user.reviews.push(review);
   user.nrOfReviews += 1;
   await user.save({ session });
@@ -53,7 +55,7 @@ exports.updateServiceReview = async (reviewId, data) => {
   updatedReview.rate = data.rating;
   await updatedReview.save();
   return {
-    message: "Post updated!",
+    message: "Review updated!",
     review: updatedReview,
   };
 };
@@ -65,8 +67,8 @@ exports.deleteServiceReview = async (reviewId) => {
     error.statusCode = 404;
     throw error;
   }
-  const objectId = new ObjectId(reviewId);
-  await Review.deleteOne({ _id: objectId });
+  //const objectId = new ObjectId(reviewId);
+  await Review.deleteOne({ _id: reviewId });
   return {
     message: "Review deleted!",
     review: deletedReview,

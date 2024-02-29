@@ -36,13 +36,6 @@ exports.login = async (req, res, next) => {
 exports.getUser = async (req, res, next) => {
   try {
     const userId = req.params.userId;
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      const error = new Error("Validation failed.");
-      error.statusCode = 422;
-      error.data = errors.array();
-      throw error;
-    }
     const result = await authService.getUserService(userId);
     res.status(200).json(result);
   } catch (error) {
@@ -76,13 +69,6 @@ exports.updateUser = async (req, res, next) => {
 exports.deleteUser = async (req, res, next) => {
   try {
     const userId = req.params.userId;
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      const error = new Error("Validation failed.");
-      error.statusCode = 422;
-      error.data = errors.array();
-      throw error;
-    }
     const result = await authService.deleteUserService(userId);
     res.status(200).json(result);
   } catch (error) {

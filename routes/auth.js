@@ -29,7 +29,9 @@ router.put(
 
   authController.signup
 );
+
 router.post("/login", authController.login);
+
 router.get("/user/:userId", isAuth, authController.getUser);
 router.patch(
   "/user/:userId",

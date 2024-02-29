@@ -51,8 +51,8 @@ exports.updateReview = async (req, res, next) => {
     };
     const result = await reviewService.updateServiceReview(reviewId, data);
     res.status(200).json(result);
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
 
